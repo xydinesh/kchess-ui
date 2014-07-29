@@ -1,0 +1,71 @@
+<!-- template.html -->
+<html>
+<head>
+  <title>Hello React</title>
+  <script src="http://fb.me/react-0.11.0.js"></script>
+  <script src="http://fb.me/JSXTransformer-0.11.0.js"></script>
+  <script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
+</head>
+<body>
+  <div id="content"></div>
+  <script type="text/jsx">
+    /** @jsx React.DOM */
+      // The above declaration must remain intact at the top of the script.
+      // Your code here
+	  
+	  var CommentList = React.createClass({
+		render: function() {
+			return(
+				<div className="commentList">
+					<Comment author="Pete Hunt"> This is one comment </Comment>
+					<Comment author="Dinesh Weerapurage"> This is another comment </Comment>
+				</div>
+			);
+		}
+	  });
+	  
+	  var Comment = React.createClass({
+		render: function() {
+			return(
+				<div className="comment">
+					<h2 className="commentAuthor">
+					{this.props.author}
+					</h2>
+					{this.props.children}
+				</div>
+			);
+		}
+	  });
+	  
+	  var CommentForm = React.createClass({
+		render: function() {
+			return(
+				<div className="commentForm">
+					Hello, world! I'm a CommentForm
+				</div>
+			);
+		}
+	  });
+	  
+      var CommentBox = React.createClass({displayName: "CommentBox",
+        render: function() {
+          return (
+            React.DOM.div({className: "commentBox"},
+			<h1> Comments </h1>,
+			<CommentList/>,
+			<CommentForm />)
+            );
+        }
+      });
+      
+
+      // instantiates root component, starts the framework and 
+      // injects the markup into raw DOM element.
+      React.renderComponent(
+        CommentBox(null),
+        document.getElementById('content')
+        );
+    </script>
+  </body>
+  </html>
