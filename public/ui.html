@@ -1,7 +1,7 @@
 <!-- template.html -->
 <html>
 <head>
-  <title>Hello React</title>
+  <title>kchess</title>
   <script src="http://fb.me/react-0.11.0.js"></script>
   <script src="http://fb.me/JSXTransformer-0.11.0.js"></script>
   <script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
@@ -24,7 +24,8 @@
 	  		var btime = this.refs.btime.getDOMNode().value.trim();
 	  		var comment = this.refs.comment.getDOMNode().value.trim();
 	  		this.props.onKchessSubmit({white: white, black: black, result:result,
-	  									wtime: wtime, btime: btime, comments: comment})
+	  									wtime: wtime, btime: btime, comments: comment});
+	  		//this.props.onKchessSubmit({"white": white});
 	  		// this.refs.white.getDOMNode().value = '';
 	  		// this.refs.black.getDOMNode().value = '';
 	  		// this.refs.result.getDOMNode().value = '';
@@ -53,26 +54,27 @@
 		}
 	  });
 	  
-      var KchessBox = React.createClass({displayName: "KChessBox",
+      var KchessBox = React.createClass({
       	handleKchessSubmit: function(comment) {
 	      	$.ajax({
 	      		url: this.props.url,
-	      		dataType: 'json',
 	      		type: 'POST',
+	      		dataType: 'jsonp',
 	      		data: comment,
 	      		success: function(data) {
+	      			console.log(comment);
 	        		this.setState({data: data});
 	      		}.bind(this),
 	      		error: function(xhr, status, err) {
-	      			consule.error(comment);
-	        		console.error(this.props.url, status, err.toString());
+	      			console.error(comment);
+	      			 console.error(JSON.stringify(xhr));
+	        		console.error(this.props.url, status, err);
 	      		}.bind(this)
 	    	});
       	},
       	getInitialState: function() {
       		return {data: []};
       	},
-
         render: function() {
           return (
             React.DOM.div({className: "kchessBox"},
